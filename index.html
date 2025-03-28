@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz Aniversário!</title>
+    <style>
+
+        /* CORPO DA PAGINA */
+        body {
+            text-align: center;
+            background-color: #ff00ff; /* FUNDO ROSA */
+            color: yellow;
+            font-family: 'Comic Sans MS', cursive; /* FONTE CHARMOSA ~Q */
+            overflow: hidden;
+            position: relative;
+        }
+        
+        /* ESTILOS DOS TITULOS */
+        h1 {
+            font-size: 80px;
+            text-shadow: 5px 5px black; /* SOMBRINHA */
+            animation: pisca 0.1s infinite alternate; /* EFEITO DISCOTECA TUNTS TUNTS */
+        }
+
+        h2 {
+            font-size: 50px;
+            text-shadow: 5px 5px black;
+        }
+        
+        /* ANIMAÇÃO DE DISCOTECA TUNTS TUNTS */
+        @keyframes pisca {
+            from { color: yellow; }
+            to { color: red; }
+        }
+        
+        /* ESTILO DOS BALOES */
+        .baloes {
+            position: absolute;
+            bottom: -600px; /* COMEÇANDO FORA DA TELA */
+            width: 300px; /* TAMANHO DOS BALOES */
+            animation: subir 5s infinite ease-in-out;
+        }
+        
+        /* ANIMAÇÃO DE SUBIR DOS BALOES */
+        @keyframes subir {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(-110vh); opacity: 0; }
+        }
+        
+        /* CIRCULO DA FOTO DA GATA */
+        .foto-amanda {
+            border: 10px solid gold;
+            border-radius: 50%; /* ARREDONDADO */
+            width: 300px;
+            height: 300px;
+            box-shadow: 10px 10px black;
+        }
+
+        /* ESTILO DO PLAYER */
+        .player-container {
+            margin-top: 20px;
+        }
+        
+        audio {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 10px;
+            padding: 5px;
+            background-color: #f1c40f;
+            border: none;
+        }
+        
+        /* CONFIG DOS CONFETES */
+        .confete {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: red;
+            border-radius: 50%;
+            animation: cair 5s infinite ease-in-out;
+        }
+        
+        /* ANIMAÇÃO DOS CONFETES CAINDO */
+        @keyframes cair {
+            0% { transform: translateY(-10vh); opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0; }
+        }
+
+         /* Media Queries para dispositivos menores */
+         @media (max-width: 768px) {
+            body {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                height: 100vh;
+            }
+
+            h1 {
+                font-size: 60px;
+            }
+
+            h2 {
+                font-size: 40px;
+            }
+
+            .foto-amanda {
+                width: 250px;
+                height: 250px;
+            }
+
+            audio {
+                max-width: 250px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                height: 100vh;
+            }
+
+            h1 {
+                font-size: 50px;
+            }
+
+            h2 {
+                font-size: 30px;
+            }
+
+            .foto-amanda {
+                width: 200px;
+                height: 200px;
+            }
+
+            audio {
+                max-width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>🎉 FELIZ ANIVERSÁRIO! 🎉</h1>
+
+    <h2>SEUS 30 ANOS</h2>
+
+    <!-- FOTO DA GATA -->
+    <img class="foto-amanda" src="amanda.png" alt="Foto da aniversariante">
+    
+    <!-- BOTAO PRA TOCAR MUSICA -->
+    <div class="player-container">
+        <button onclick="tocarMusica()">▶ Tocar Música</button>
+        <audio id="musica" loop>
+            <source src="parabens.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+    
+    <script>
+        /* FUNÇAO TOCA MUSICA QUANDO CLICA NO BOTAO PQ EU DESISTI DE FAZER FUNCIONAR SOZINHO QUANDO ABRE A PAGINA */
+        function tocarMusica() {
+            let musica = document.getElementById("musica");
+            musica.play();
+        }
+
+        /* FUNÇAO PRA ANIMAR OS BALOES SORTIDOS */
+        function criarBalao() {
+            let balao = document.createElement("img");
+            // ESCOLHE UMA FOTO ALEATORIA DE BALAO
+            let baloes = ["balao1.png", "balao2.png", "balao3.png", "balao4.png"];
+            balao.src = baloes[Math.floor(Math.random() * baloes.length)];
+            balao.classList.add("baloes");
+            balao.style.left = Math.random() * window.innerWidth + "px"; /* POSIÇÃO ALEATORIA */
+            balao.style.animationDuration = (Math.random() * 3 + 2) + "s";
+            document.body.appendChild(balao);
+            setTimeout(() => { balao.remove(); }, 5000); /* SOME DEPOIS DE 5 SEGUNDOS */
+        }
+        
+        /* CRIA OS BALOES A CADA 500 MILISEGUNDOS */
+        setInterval(criarBalao, 500);
+        
+        /* FUNÇAO PARA ANIMAR OS CONFETES */
+        function criarConfete() {
+            let confete = document.createElement("div");
+            confete.classList.add("confete");
+            confete.style.left = Math.random() * window.innerWidth + "px";
+            confete.style.top = "-10px";
+            confete.style.backgroundColor = ['red', 'blue', 'yellow', 'green', 'purple', 'orange'][Math.floor(Math.random() * 6)];
+            confete.style.animationDuration = (Math.random() * 3 + 2) + "s";
+            document.body.appendChild(confete);
+            setTimeout(() => { confete.remove(); }, 5000); /* APOS 5 SEGUNDOS ELES SOMEM */
+        }
+        
+        /* CRIA OS CONFETES A CADA 200 MILISEGUNDOS */
+        setInterval(criarConfete, 200);
+    </script>
+</body>
+</html>
